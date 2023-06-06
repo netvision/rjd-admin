@@ -19,7 +19,7 @@ const markers = ref()
 const bounds = ref([])
 const setMapbox = () => {
      mapDiv.value = L.map("mapContainer").setView([28.241600, 75.649902], 13);
-     markers.value = L.layerGroup(L.marker([28.241600, 75.649902]).bindPopup('Hello')).addTo(mapDiv.value)
+     markers.value = L.layerGroup(L.marker([28.241600, 75.649902]).bindPopup('Office')).addTo(mapDiv.value)
      L.tileLayer(
        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
        {
@@ -39,9 +39,7 @@ const setMapbox = () => {
     let d = day.value.toISOString().slice(0, 10)
     
     let res = await axios
-      .get('http://rkjdss.dalmiatrusts.in/rjdssapi/web/staff-logs/daily?d=' + d, {
-        headers: { Accept: 'application/json, text/plain' },
-      })
+      .get('https://api.dalmiatrusts.in/staff-logs/daily?d=' + d)
       .then((r) => r.data)
       console.log(res)
     res.forEach((r) => {
@@ -56,6 +54,7 @@ const setMapbox = () => {
     })
     mapDiv.value.fitBounds(bounds.value)
   }
+getData()
 const formatName = (name) => {
   let n = name.split('.')
   if(n.length > 1) {
